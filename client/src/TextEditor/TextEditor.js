@@ -24,12 +24,8 @@ const TextEditor = () => {
     const [quill, setQuill] = useState()
 
     useEffect(() => {
-    }, [socket, quill, id])
-
-    useEffect(() => {
         const sock = io("http://localhost:3001", { query: { id } },
         )
-        sock.emit('join', id)
         setSocket(sock)
         return () => {
             sock.disconnect()
@@ -37,23 +33,49 @@ const TextEditor = () => {
     }, [])
 
     useEffect(() => {
-        const handler = (delta, oldDelta, source) => {
-            if (source !== 'user') return
-            socket.emit('send-changes', delta)
-        }
-        quill && quill.on('text-change', handler)
+        if (!socket || !quill)
+            return
+        const save = setInterval(() => {
+            socket.emit('save', quill.getContents())
+        }, 2000)
         return () => {
-            quill && quill.off('text-change', handler)
+            clearInterval(save)
         }
     }, [socket, quill])
 
     useEffect(() => {
-        const handler = (delta) => {
-            quill && quill.updateContents(delta)
+        if (!socket || !quill)
+            return
+        socket.once('load-doc', (doc) => {
+            console.log(doc);
+            quill.setContents(doc)
+            quill.enable()
+        })
+        socket.emit('join', id)
+    }, [socket, quill, id])
+
+    useEffect(() => {
+        if (!socket || !quill)
+            return
+        const handler = (delta, oldDelta, source) => {
+            if (source !== 'user') return
+            socket.emit('send-changes', delta)
         }
-        socket && socket.on('recv-changes', handler)
+        quill.on('text-change', handler)
         return () => {
-            socket && socket.off('recv-changes', handler)
+            quill.off('text-change', handler)
+        }
+    }, [socket, quill])
+
+    useEffect(() => {
+        if (!socket || !quill)
+            return
+        const handler = (delta) => {
+            quill.updateContents(delta)
+        }
+        socket.on('recv-changes', handler)
+        return () => {
+            socket.off('recv-changes', handler)
         }
     }, [socket, quill])
 
@@ -63,6 +85,7 @@ const TextEditor = () => {
         const editor = document.createElement("div")
         wrapper.append(editor)
         const q = new Quill(editor, { theme: 'snow', modules: { toolbar: TOOLBAR_OPTIONS } })
+        q.disable()
         setQuill(q)
     }, [])
 
