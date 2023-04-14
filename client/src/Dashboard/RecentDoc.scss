@@ -1,0 +1,20 @@
+.recentDoc{
+    margin-right: 50px;
+    border: solid 1px black;
+    img{
+        height: 200px;
+        width: 150px;
+        object-fit: cover;
+    }
+    .title{
+        padding: 2px 6px;
+        font-size: 15px;
+        font-weight: bold;
+    }
+    .recDocDetails{
+        display: flex;
+        // justify-content: space-around;
+        padding: 2px 5px;
+        font-size: 15px;
+    }
+}

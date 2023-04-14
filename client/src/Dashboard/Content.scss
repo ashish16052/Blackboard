@@ -1,0 +1,26 @@
+.content {
+    // flex-direction: column;
+    padding: 50px 120px;
+
+    h2 {
+        margin-bottom: 20px;
+        font-size: 30px;
+        letter-spacing: 1px;
+    }
+    .Docs {
+        display: flex;
+        justify-content: start;
+        justify-content: start;
+        .plus-sign {
+            width: 150px;
+            font-size: 50px;
+            border: dashed black 2px;
+            // padding: 50px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 50px;
+        }
+    }
+
+}

@@ -1,0 +1,48 @@
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    height: 10vh;
+    width: 100%;
+    align-items: center;
+    background-color: #efefef;
+
+    .Logo {
+        display: flex;
+        justify-content: center;
+
+        /* justify-content: space-evenly; */
+        // width: 20%;
+        .logo {
+            font-size: 50px;
+        }
+
+        .doc-logo {
+            padding: 0 15px 0 15px;
+            font-size: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: rgb(58, 56, 56);
+        }
+    }
+
+    .search {
+        // width: 60%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .search input {
+        width: 650px;
+        padding: 3px;
+        height: 7vh;
+    }
+
+    .login {
+        // width: 20%;
+        display: flex;
+        justify-content: center;
+    }
+}
