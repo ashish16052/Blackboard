@@ -1,7 +1,7 @@
 .navbar {
     display: flex;
     justify-content: space-around;
-    height: 10vh;
+    height: 100px;
     width: 100%;
     align-items: center;
     background-color: #efefef;
@@ -9,6 +9,7 @@
     .Logo {
         display: flex;
         justify-content: center;
+        cursor: pointer;
 
         /* justify-content: space-evenly; */
         // width: 20%;
@@ -32,12 +33,15 @@
         // width: 60%;
         display: flex;
         justify-content: center;
+
+
     }
 
     .search input {
         width: 650px;
         padding: 3px;
         height: 7vh;
+        border-radius: 10px;
     }
 
     .login {

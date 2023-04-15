@@ -1,6 +1,6 @@
 import './App.scss';
 import TextEditor from './TextEditor/TextEditor';
-import { Route, Routes, Navigate } from 'react-router-dom'
+import { Route, Routes, Navigate ,useNavigate} from 'react-router-dom'
 import { v4 as uuidV4 } from 'uuid'
 import Navbar from "./Dashboard/Navbar"
 import Content from "./Dashboard/Content"
@@ -21,3 +21,8 @@ function App() {
 }
 
 export default App;
+
+//To commit:-
+//git add .
+//git commit -m "added content page"
+//git push origin main
