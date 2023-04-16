@@ -1,30 +1,33 @@
 .navbar {
     display: flex;
-    justify-content: space-around;
-    height: 100px;
-    width: 100%;
+    justify-content: space-between;
+    height: 80px;
     align-items: center;
     background-color: #efefef;
+    position: fixed;
+    width: 100vw;
+    top: 0px;
+    z-index: 2;
 
     .Logo {
         display: flex;
         justify-content: center;
         cursor: pointer;
+        margin-left: 100px;
 
         /* justify-content: space-evenly; */
         // width: 20%;
         .logo {
-            font-size: 50px;
+            font-size: 40px;
         }
 
         .doc-logo {
             padding: 0 15px 0 15px;
-            font-size: 30px;
+            font-size: 40px;
             display: flex;
             justify-content: center;
             align-items: center;
             font-weight: bold;
-            letter-spacing: 2px;
             color: rgb(58, 56, 56);
         }
     }
@@ -44,9 +47,16 @@
         border-radius: 10px;
     }
 
-    .login {
-        // width: 20%;
-        display: flex;
-        justify-content: center;
+    @media screen and (max-width: 700px) {
+        .Logo{
+            margin-left: 30px;
+            .logo {
+                font-size: 40px;
+            }
+    
+            .doc-logo {
+                font-size: 30px;
+            }
+        }
     }
 }

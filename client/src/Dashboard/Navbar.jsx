@@ -2,10 +2,14 @@ import React from "react";
 import "./Navbar.scss"
 import UserNav from "./userNav";
 import { useNavigate } from "react-router-dom";
-import Details from "./Details";
 
-let userRegistered = true;
 function Navbar() {
+    const user = {
+        id: 1,
+        name: "Jaideep Singh",
+        userLogo: ""
+    }
+    const userRegistered = false;
     const navigate = useNavigate();
     function homePage() {
         navigate("/");
@@ -16,11 +20,8 @@ function Navbar() {
                 <div className="logo">📄</div>
                 <div className="doc-logo">BlackBoard</div>
             </div>
-            <div className="search">
-                <input type="search" placeholder="🔍 Search" />
-            </div>
             <div className="user-Nav">
-                <UserNav isRegistered={userRegistered} details={Details} />
+                <UserNav isRegistered={userRegistered} user={user} />
             </div>
         </div>
     )
