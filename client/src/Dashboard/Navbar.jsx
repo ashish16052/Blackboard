@@ -3,12 +3,9 @@ import "./Navbar.scss"
 import UserNav from "./userNav";
 import { useNavigate } from "react-router-dom";
 
-function Navbar() {
-    const user = {
-        id: 1,
-        name: "Jaideep Singh",
-        userLogo: ""
-    }
+function Navbar(props) {
+    const user = props.user
+    const setUser = props.setUser
     const userRegistered = false;
     const navigate = useNavigate();
     function homePage() {
@@ -21,7 +18,7 @@ function Navbar() {
                 <div className="doc-logo">BlackBoard</div>
             </div>
             <div className="user-Nav">
-                <UserNav isRegistered={userRegistered} user={user} />
+                <UserNav isRegistered={userRegistered} user={user} setUser={setUser} url={props.url}/>
             </div>
         </div>
     )

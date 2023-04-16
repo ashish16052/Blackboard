@@ -17,8 +17,8 @@ module.exports.controllerFunction = function (app) {
         });
     })
 
-    mainRouter.get("/readDoc/:id", async (req, res, next) => {
-        mainModel.findOne({ _id: req.params.id }, function (err, doc) {
+    mainRouter.get("/readdoc/:id", async (req, res, next) => {
+        mainModel.find({ userid: req.params.id }, function (err, doc) {
             if (err) {
                 return res.send(err);
             } else {
@@ -96,5 +96,5 @@ module.exports.controllerFunction = function (app) {
         });
     });
 
-    app.use("/chat", mainRouter);
+    app.use("/doc", mainRouter);
 };

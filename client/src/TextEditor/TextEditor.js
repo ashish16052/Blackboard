@@ -18,13 +18,20 @@ const TOOLBAR_OPTIONS = [
 ]
 
 
-const TextEditor = () => {
+const TextEditor = (props) => {
+    const userid = props.user._id
     const { id } = useParams()
     const [socket, setSocket] = useState()
     const [quill, setQuill] = useState()
 
     useEffect(() => {
-        const sock = io("http://localhost:3001", { query: { id } },
+        console.log(id, userid);
+        const sock = io("http://localhost:3001", {
+            query: {
+                id: id,
+                userid: userid,
+            }
+        },
         )
         setSocket(sock)
         return () => {

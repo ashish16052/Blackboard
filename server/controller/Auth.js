@@ -5,8 +5,8 @@ const mainRouter = express.Router();
 module.exports.controllerFunction = function (app) {
 
     mainRouter.get('/user', (req, res) => {
-        console.log(req.user);
-        console.log(req.session);
+        // console.log(req.user);
+        // console.log(req.session);
         res.send(req.user)
     })
 

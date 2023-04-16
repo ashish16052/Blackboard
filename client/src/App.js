@@ -1,20 +1,33 @@
 import './App.scss';
 import TextEditor from './TextEditor/TextEditor';
-import { Route, Routes, Navigate ,useNavigate} from 'react-router-dom'
-import { v4 as uuidV4 } from 'uuid'
+import { Route, Routes, Navigate, useNavigate } from 'react-router-dom'
 import Navbar from "./Dashboard/Navbar"
 import Content from "./Dashboard/Content"
-// import RecentDoc from "./Dashboard/RecentDoc"
-// import SavedDOC from "./Dashboard/SavedDOC"
+import { useEffect, useState } from 'react';
+import axios from 'axios'
+const url = 'http://localhost:3002'
 
 function App() {
+
+  const [user, setUser] = useState(JSON.parse(sessionStorage.getItem('user')))
+
+  const getUser = async () => {
+    const { data } = await axios.get(`${url}/auth/user`, { withCredentials: true })
+    setUser(data);
+    sessionStorage.setItem('user', JSON.stringify(data));
+    console.log(data);
+  }
+
+  useEffect(() => {
+    getUser()
+  }, [])
+
   return (
     <div className="App">
-      <Navbar />
+      <Navbar url={url} user={user} setUser={setUser} />
       <Routes>
-        <Route path='/' exact element={<Content />} />
-        <Route exact path='/newdoc' element={<Navigate to={`/doc/${uuidV4()}`} />} />
-        <Route path='/doc/:id' element={<TextEditor />} />
+        <Route path='/' exact element={<Content url={url} user={user} />} />
+        <Route path='/doc/:id' element={<TextEditor user={user} url={url} />} />
       </Routes>
     </div>
   );
