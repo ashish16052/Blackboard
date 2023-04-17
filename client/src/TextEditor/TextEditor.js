@@ -24,11 +24,16 @@ const TextEditor = (props) => {
     const { id } = useParams()
     const [socket, setSocket] = useState()
     const [quill, setQuill] = useState()
+    const [title, setTitle] = useState('Untitled')
 
     const adddoc = async () => {
         const { data } = await axios.post(`${props.url}/user/adddoc/${userid}`, { docid: id }, { withCredentials: true })
         console.log(data);
     }
+
+    useEffect(() => {
+        console.log(title);
+    }, [title])
 
     useEffect(() => {
         console.log(id, userid);
@@ -50,19 +55,20 @@ const TextEditor = (props) => {
         if (!socket || !quill)
             return
         const save = setInterval(() => {
-            socket.emit('save', quill.getContents())
+            console.log(title);
+            socket.emit('save', { title: title, data: quill.getContents() })
         }, 2000)
         return () => {
             clearInterval(save)
         }
-    }, [socket, quill])
+    }, [socket, quill, title])
 
     useEffect(() => {
         if (!socket || !quill)
             return
         socket.once('load-doc', (doc) => {
-            console.log(doc);
-            quill.setContents(doc)
+            quill.setContents(doc.data)
+            setTitle(doc.title)
             quill.enable()
         })
         socket.emit('join', id)
@@ -104,7 +110,12 @@ const TextEditor = (props) => {
     }, [])
 
     return (
-        <div className='Container' ref={wrapperRef}></div>
+        <div className='editor'>
+            <input value={title} onChange={(e) => setTitle(e.target.value)} name='title' type='text' className='title' />
+            {title}
+            <div className='Container' ref={wrapperRef}>
+            </div>
+        </div>
     )
 }
 

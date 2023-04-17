@@ -93,12 +93,12 @@ io.on('connection', socket => {
     socket.on('join', async (id) => {
         const document = await findOrCreate(id)
         socket.join(id)
-        socket.emit('load-doc', document.data)
+        socket.emit('load-doc', { title: document.title, data: document.data })
         socket.on('send-changes', delta => {
             socket.to(id).emit('recv-changes', delta)
         })
-        socket.on('save', async data => {
-            await Document.findByIdAndUpdate(id, { data })
+        socket.on('save', async (data) => {
+            await Document.findByIdAndUpdate(id, { title: data.title, data: data.data })
         })
     })
 })
