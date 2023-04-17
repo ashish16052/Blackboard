@@ -28,12 +28,8 @@ const TextEditor = (props) => {
 
     const adddoc = async () => {
         const { data } = await axios.post(`${props.url}/user/adddoc/${userid}`, { docid: id }, { withCredentials: true })
-        console.log(data);
+        // console.log(data);
     }
-
-    useEffect(() => {
-        console.log(title);
-    }, [title])
 
     useEffect(() => {
         console.log(id, userid);
@@ -55,7 +51,6 @@ const TextEditor = (props) => {
         if (!socket || !quill)
             return
         const save = setInterval(() => {
-            console.log(title);
             socket.emit('save', { title: title, data: quill.getContents() })
         }, 2000)
         return () => {

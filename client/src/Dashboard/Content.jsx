@@ -21,7 +21,7 @@ function Content(props) {
     const getDocs = async () => {
         if (user) {
             const { data } = await axios.get(`${props.url}/user/readdoc/${user._id}`, { withCredentials: true })
-            console.log(data);
+            // console.log(data);
             if (data) {
                 setDocuments(data);
             }

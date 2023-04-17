@@ -15,7 +15,7 @@ function App() {
     const { data } = await axios.get(`${url}/auth/user`, { withCredentials: true })
     setUser(data);
     sessionStorage.setItem('user', JSON.stringify(data));
-    console.log(data);
+    // console.log(data);
   }
 
   useEffect(() => {
