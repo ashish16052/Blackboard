@@ -4,6 +4,7 @@ import Quill from 'quill'
 import 'quill/dist/quill.snow.css'
 import './TextEditor.scss'
 import { useParams } from 'react-router-dom'
+import axios from 'axios'
 
 const TOOLBAR_OPTIONS = [
     [{ header: [1, 2, 3, false] }, { font: [] }],
@@ -24,6 +25,11 @@ const TextEditor = (props) => {
     const [socket, setSocket] = useState()
     const [quill, setQuill] = useState()
 
+    const adddoc = async () => {
+        const { data } = await axios.post(`${props.url}/user/adddoc/${userid}`, { docid: id }, { withCredentials: true })
+        console.log(data);
+    }
+
     useEffect(() => {
         console.log(id, userid);
         const sock = io("http://localhost:3001", {
@@ -33,6 +39,7 @@ const TextEditor = (props) => {
             }
         },
         )
+        adddoc()
         setSocket(sock)
         return () => {
             sock.disconnect()

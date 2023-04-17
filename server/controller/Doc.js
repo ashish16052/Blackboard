@@ -17,16 +17,6 @@ module.exports.controllerFunction = function (app) {
         });
     })
 
-    mainRouter.get("/readdoc/:id", async (req, res, next) => {
-        mainModel.find({ userid: req.params.id }, function (err, doc) {
-            if (err) {
-                return res.send(err);
-            } else {
-                res.send(doc);
-            }
-        });
-    })
-
     mainRouter.get("/readOne/:id", async (req, res, next) => {
         mainModel.findById(req.params.id, function (err, doc) {
             if (err) {

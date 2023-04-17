@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 const mainRouter = express.Router();
 const mainModel = mongoose.model("User");
+const docModel = mongoose.model("Document");
 
 
 module.exports.controllerFunction = function (app) {
@@ -15,6 +16,38 @@ module.exports.controllerFunction = function (app) {
                 res.send(doc);
             }
         });
+    })
+
+    mainRouter.get("/readdoc/:id", async (req, res, next) => {
+        mainModel.findById(req.params.id, async function (err, doc) {
+            if (err) {
+                return res.send(err);
+            } else if (doc) {
+                var docarr = []
+                for (var i = 0; i < doc.Documents.length; i++) {
+                    const d = await docModel.findById(doc.Documents[i])
+                    docarr.push(d)
+                }
+                res.send(docarr);
+            }
+            else {
+                return res.send(doc);
+            }
+        });
+    })
+
+    mainRouter.post("/adddoc/:id", async (req, res, next) => {
+        mainModel.findByIdAndUpdate(req.params.id,
+            { $addToSet: { Documents: req.body.docid } },
+            { upsert: true, new: true },
+            function (err, doc) {
+                if (err) {
+                    return res.send(err);
+                }
+                else {
+                    return res.send(doc);
+                }
+            });
     })
 
     mainRouter.get("/readOne/:id", async (req, res, next) => {

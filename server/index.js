@@ -79,20 +79,19 @@ const io = require("socket.io")(3001, {
     }
 })
 
-const findOrCreate = async (id, userid) => {
+const findOrCreate = async (id) => {
     if (!id)
         return
     const document = await Document.findById(id)
     if (document)
         return document
     else
-        return await Document.create({ _id: id, userid: userid, data: "", cdate: Date.now() })
+        return await Document.create({ _id: id, data: "", cdate: Date.now() })
 }
 
 io.on('connection', socket => {
     socket.on('join', async (id) => {
-        const userid = socket.handshake.query['userid']
-        const document = await findOrCreate(id, userid)
+        const document = await findOrCreate(id)
         socket.join(id)
         socket.emit('load-doc', document.data)
         socket.on('send-changes', delta => {
